@@ -3,9 +3,9 @@ import { IsString, IsEmail } from 'class-validator';
 
 export class CreateUserDto {
     @IsString()
-    fistName: string;
+    firstName: string;
     @IsString()
-    LastName: string;
+    lastName: string;
     @IsEmail()
     email: string;
     @IsString()

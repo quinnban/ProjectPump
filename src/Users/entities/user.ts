@@ -16,4 +16,10 @@ export class User {
 
     @Column()
     team: string
+
+    @Column()
+    username: string
+
+    @Column()
+    password: string
 }
