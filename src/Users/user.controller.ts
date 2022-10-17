@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
-import { User } from './entities/user';
+import { User } from './entities/user.entity';
 import { CreateUserDto } from './models/createUserDto';
-import { UpdateUserDto } from './models/updateUserDto';
+import { UpdateUserProfileDto } from './models/updateUserProfileDto';
 import { UserService } from './user.service';
 
 
-@Controller('user')
+@Controller('users')
 export class UserController {
 
   constructor(private userService: UserService){}
@@ -16,7 +16,7 @@ export class UserController {
     }
 
     @Get(':id')
-    findOneById(@Param('id') id: number): Promise<User> {
+    findOneById(@Param('id') id: string): Promise<User> {
         return this.userService.findOne(id);
     }
 
@@ -26,7 +26,7 @@ export class UserController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateUser: UpdateUserDto ) {
+    update(@Param('id') id: string, @Body() updateUser: UpdateUserProfileDto ) {
       return `update user`;
     }
   

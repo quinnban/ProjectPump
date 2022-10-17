@@ -4,12 +4,21 @@ import { AppService } from './app.service';
 import { APP_PIPE } from '@nestjs/core';
 import { UserModule } from './Users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './Users/entities/user';
+import { User } from './Users/entities/user.entity';
+import { TeamModule } from './Teams/team.module';
+import { Team } from './Teams/entities/team';
+import { UserProfile } from './Users/entities/userProfile.entity';
 
+
+const entities = [
+  User,
+  Team,
+  UserProfile
+];
 
 
 @Module({
-  imports: [UserModule,
+  imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -17,9 +26,12 @@ import { User } from './Users/entities/user';
       username: 'service_user',
       password: 'password',
       database: 'workout',
-      entities: [User],
+      entities:[User,Team,UserProfile],
       synchronize: true,
-    })],
+    }),
+    UserModule,
+    TeamModule,
+  ],
   controllers: [AppController],
   providers: [AppService,
     {
@@ -28,3 +40,4 @@ import { User } from './Users/entities/user';
     },],
 })
 export class AppModule {}
+
