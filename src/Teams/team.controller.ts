@@ -1,8 +1,7 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
-import { CreateUserDto } from 'src/Users/models/createUserDto';
-import { UpdateUserProfileDto } from 'src/Users/models/updateUserProfileDto';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { Team } from './entities/team';
 import { CreateTeamDto } from './models/createTeamDto';
+import { TeamDto } from './models/teamDto';
 import { UpdateTeamDto } from './models/updateTeamDto';
 import { TeamService } from './team.service';
 
@@ -12,23 +11,23 @@ export class TeamController {
   constructor(private teamService: TeamService){}
 
     @Get()
-    findAll(): Promise<Team[]> {
+    findAll(): Promise<TeamDto[]> {
      return this.teamService.findAll();
     }
 
     @Get(':id')
-    findOneById(@Param('id') id: string): Promise<Team> {
+    findOneById(@Param('id') id: string): Promise<TeamDto> {
       return this.teamService.findOne(id);
     }
 
     @Post()
-    create(@Body() team: CreateTeamDto): Promise<Team>{
-       return Promise.resolve(Team.newInstace());
+    create(@Body() team: CreateTeamDto): Promise<TeamDto>{
+       return this.teamService.create(team);
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updatedTeam: UpdateTeamDto) {
-      return `update user`;
+    update(@Param('id') id: string, @Body() updatedTeam: UpdateTeamDto):Promise<TeamDto> {
+      return this.teamService.update(id,updatedTeam);
     }
   
     @Delete(':id')

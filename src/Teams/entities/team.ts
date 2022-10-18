@@ -13,7 +13,7 @@ export class Team {
     name: string;
 
     @OneToMany(() => UserProfile, (user) => user.team)
-    users: UserProfile [];
+    users: Promise<UserProfile []>;
 
     public static newInstace(): Team{
         const instance = new Team();

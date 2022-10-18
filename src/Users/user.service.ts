@@ -7,7 +7,7 @@ import { UserProfile } from './entities/userProfile.entity';
 import { CreateUserDto } from './models/createUserDto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserProfileDto } from './models/updateUserProfileDto';
-import { UpdateUserProfileDtoAssembler } from './transformers/updateUserProfileDto.assembler';
+import { UpdateUserProfileDtoAssembler } from './assemblers/updateUserProfileDto.assembler';
 
 @Injectable()
 export class UserService {
