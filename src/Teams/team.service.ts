@@ -1,8 +1,11 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { UserProfile } from 'src/Users/entities/userProfile.entity';
+import { In, Repository } from 'typeorm';
 import { Team } from './entities/team';
+import { CreateTeamDto } from './models/createTeamDto';
+import { UpdateTeamDto } from './models/updateTeamDto';
 
 
 @Injectable()
@@ -10,6 +13,7 @@ export class TeamService {
 
     constructor(
         @InjectRepository(Team) private teamsRepository: Repository<Team>,
+        @InjectRepository(UserProfile) private usersProfileRepository: Repository<UserProfile>
       ) {}
 
       findAll(): Promise<Team[]> {
@@ -24,15 +28,19 @@ export class TeamService {
         await this.teamsRepository.delete(id);
       }
 
-    //   async create(user: CreateUserDto): Promise<User>{
-    //     const profile = UserProfile.newInstace();
-    //     const createdUser = User.newInstace();
+      async update(updatedTeam : UpdateTeamDto){
 
-    //     createdUser.email = user.email;
-    //     createdUser.password = bcrypt.hashSync(user.password, 10);
-    //     createdUser.profile = profile;
-    //     console.log(bcrypt.compareSync(user.password, createdUser.password));
-    //     return this.usersRepository.save(createdUser);
-    //   }
+      }
+
+      async create(team: CreateTeamDto): Promise<Team>{
+       const createdTeam = Team.newInstace();
+       createdTeam.name = team.name;
+
+       if(team.users?.length !=0){
+        const users = await this.usersProfileRepository.find({where:{id: In(team.users)}})
+        createdTeam.users = users;
+       }
+        return this.teamsRepository.save(createdTeam);
+      }
   
 }
