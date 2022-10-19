@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { Team } from './entities/team';
 import { CreateTeamDto } from './models/createTeamDto';
 import { TeamDto } from './models/teamDto';
 import { UpdateTeamDto } from './models/updateTeamDto';

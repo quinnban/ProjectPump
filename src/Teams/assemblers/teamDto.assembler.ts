@@ -1,9 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { UserProfileDtoAssembler } from "src/Users/assemblers/userProfileDto.assembler";
 import { Team } from "../entities/team";
 import { TeamDto } from "../models/teamDto";
 
 @Injectable()
 export class TeamDtoAssembler{
+
+    constructor(private userProfileAssembler: UserProfileDtoAssembler){}
 
     async assembleMany(teams: Team []): Promise<TeamDto []>{
         const teamDtos = [];
@@ -20,8 +23,9 @@ export class TeamDtoAssembler{
         const teamDto = new TeamDto();
         teamDto.id = team.id;
         teamDto.name = team.name;
-        teamDto.users = await team.users;
-        return teamDto;
+        const profiles = await team.users;
+        teamDto.users = this.userProfileAssembler.assembleMany(profiles);
+        return Promise.resolve(teamDto);
     }
 
 }

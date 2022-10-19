@@ -6,8 +6,9 @@ import { User } from './entities/user.entity';
 import { UserProfile } from './entities/userProfile.entity';
 import { CreateUserDto } from './models/createUserDto';
 import * as bcrypt from 'bcrypt';
-import { UpdateUserProfileDto } from './models/updateUserProfileDto';
 import { UpdateUserProfileDtoAssembler } from './assemblers/updateUserProfileDto.assembler';
+import { UpdateUserProfileDto } from './models/updateUserProfileDto';
+
 
 @Injectable()
 export class UserService {
@@ -36,8 +37,6 @@ export class UserService {
          createdUser.profile = profile;
          await this.usersProfileRepository.save(profile);
 
-         console.log(profile);
-
         createdUser.email = user.email;
         createdUser.password = bcrypt.hashSync(user.password, 10);
 
@@ -47,7 +46,7 @@ export class UserService {
       async update(id:string, updatedUser: UpdateUserProfileDto): Promise<UserProfile> {
 
           const user = await this.usersProfileRepository.findOneBy({id});
-          if(!user){
+          if(user){
             throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
           }
           const profile = this.userProfileAssembler.disasemblyInto(updatedUser);
