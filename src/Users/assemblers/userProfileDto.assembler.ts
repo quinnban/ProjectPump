@@ -6,12 +6,14 @@ import { UserProfileDto } from "../models/userProfileDto";
 export class UserProfileDtoAssembler {
 
 
-    assembleMany(users : UserProfile []){
-        const profiles = [];
-        users.forEach(user => {
-            profiles.push(this.assemble(user))
-        });
-        return profiles;
+    async assembleMany(users : UserProfile []): Promise<UserProfileDto []>{
+        const profiles : UserProfileDto[] = [];
+        
+       for(const user of users){
+            const aUser = await this.assemble(user);
+            profiles.push(aUser);
+       }
+        return Promise.resolve(profiles);
     }
 
     async assemble(user: UserProfile): Promise<UserProfileDto> {
@@ -19,7 +21,7 @@ export class UserProfileDtoAssembler {
         profile.firstName = user.firstName;
         profile.lastName = user.lastName;
         profile.pictureURl = user.pictureURl;
-        profile.id = profile.id;
+        profile.id = user.id;
        
         const team = await user.team;
         if(team){

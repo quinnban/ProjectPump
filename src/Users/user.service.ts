@@ -1,5 +1,5 @@
 
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -46,11 +46,12 @@ export class UserService {
       async update(id:string, updatedUser: UpdateUserProfileDto): Promise<UserProfile> {
 
           const user = await this.usersProfileRepository.findOneBy({id});
-          if(user){
+          if(!user){
             throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
           }
+          
           const profile = this.userProfileAssembler.disasemblyInto(updatedUser);
-          profile.id = user.id;
+
           return this.usersProfileRepository.save(profile);
       }
 }

@@ -42,18 +42,16 @@ export class TeamService {
           team.users = Promise.resolve(users);
           team.name = updatedTeam.name;
           await this.teamsRepository.save(team);
-
           return this.teamAssembler.assemble(team);
       }
 
       async create(team: CreateTeamDto): Promise<TeamDto>{
-       const createdTeam = Team.newInstace();
-       createdTeam.name = team.name;
-
-       if(team.users?.length !=0){
-        const users = await this.usersProfileRepository.find({where:{id: In(team.users)}})
-        createdTeam.users = Promise.resolve(users);
-       }
+        const createdTeam = Team.newInstace();
+        createdTeam.name = team.name;
+        if(team.users?.length !=0){
+          const users = await this.usersProfileRepository.find({where:{id: In(team.users)}})
+          createdTeam.users = Promise.resolve(users);
+        }
         await this.teamsRepository.save(createdTeam);
         return this.teamAssembler.assemble(createdTeam);
       }
