@@ -1,10 +1,10 @@
 
-import { Entity, Column, PrimaryColumn, JoinColumn, OneToOne, BaseEntity } from "typeorm"
+import { Entity, Column, PrimaryColumn, JoinColumn, OneToOne } from "typeorm"
 import { v4 as uuidv4 } from 'uuid';
 import { UserProfile } from "./userProfile.entity";
 
-@Entity('users')
-export class User extends BaseEntity {
+@Entity()
+export class User {
     @PrimaryColumn()
     id: string;
 
@@ -14,6 +14,9 @@ export class User extends BaseEntity {
     @Column()
     password: string;
 
+    @Column()
+    role: string;
+
     @OneToOne(() => UserProfile, (profile) => profile.user, {cascade:true, onDelete:"CASCADE",eager:true})
     @JoinColumn()
     profile: UserProfile
@@ -21,6 +24,7 @@ export class User extends BaseEntity {
     public static newInstace(): User{
         const instance = new User();
         instance.id = uuidv4();
+        instance.role = 'user';
         return instance;
     }
 }

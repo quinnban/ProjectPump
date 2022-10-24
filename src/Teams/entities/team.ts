@@ -13,6 +13,7 @@ export class Team {
     name: string;
 
     @OneToMany(() => UserProfile, (user) => user.team)
+    @JoinColumn()
     users: Promise<UserProfile []>;
 
     public static newInstace(): Team{

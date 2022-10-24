@@ -1,4 +1,5 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm"
+import { Exercise } from "src/Exercises/entities/exercise.entity"
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm"
 import { PhotoMetadata } from "./photoMetadata"
 
 @Entity()
@@ -22,4 +23,7 @@ export class Photo {
 
     @OneToOne(() => PhotoMetadata, (photoMetadata) => photoMetadata.photo)
     metadata: Relation<PhotoMetadata>
+
+    @ManyToOne(() => Exercise, (exercise) => exercise.photos )
+    exersize: Exercise;
 }
