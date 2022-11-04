@@ -17,6 +17,9 @@ export class UserProfile {
     @Column({ nullable: true })
     pictureURl: string;
 
+    @Column()
+    teamId: string;
+
     @OneToOne(() => User, (user) => user.profile) 
     user: Promise<User>;
 
