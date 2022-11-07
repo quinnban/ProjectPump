@@ -2,6 +2,7 @@
 node_modules/
 dist/
 
+
 # IDE
 /.idea
 /.awcache
@@ -21,3 +22,6 @@ yarn-error.loggit
 /**/npm-debug.log
 /packages/**/.npmignore
 /packages/**/LICENSE
+
+
+awsConfig.ts

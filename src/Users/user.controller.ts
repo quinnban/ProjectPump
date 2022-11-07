@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { S3 } from 'aws-sdk';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './models/createUserDto';
 import { UpdateUserProfileDto } from './models/updateUserProfileDto';
@@ -18,6 +19,12 @@ export class UserController {
     @Get(':id')
     findOneById(@Param('id') id: string): Promise<User> {
         return this.userService.findOne(id);
+    }
+
+    @Get(':id/uploadUrl')
+    updateProfilePicture(): Promise <S3.PresignedPost> {
+      return this.userService.updateProfilePicture();
+       
     }
 
     @Post()

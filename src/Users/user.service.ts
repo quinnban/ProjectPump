@@ -8,6 +8,9 @@ import { CreateUserDto } from './models/createUserDto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserProfileDtoAssembler } from './assemblers/updateUserProfileDto.assembler';
 import { UpdateUserProfileDto } from './models/updateUserProfileDto';
+import { InjectAwsService } from 'nest-aws-sdk';
+import { S3 } from 'aws-sdk';
+
 
 
 @Injectable()
@@ -16,6 +19,7 @@ export class UserService {
     constructor(
         @InjectRepository(User) private usersRepository: Repository<User>,
         @InjectRepository(UserProfile) private usersProfileRepository: Repository<UserProfile>,
+        @InjectAwsService(S3) private readonly s3: S3,
         private userProfileAssembler: UpdateUserProfileDtoAssembler
       ) {}
 
@@ -53,5 +57,10 @@ export class UserService {
           const profile = this.userProfileAssembler.disasemblyInto(updatedUser);
 
           return this.usersProfileRepository.save(profile);
+      }
+
+       async updateProfilePicture(): Promise<S3.PresignedPost> {
+        const Bucket = "project-pump-dev-pictures";
+         return await this.s3.createPresignedPost({ Bucket})
       }
 }
