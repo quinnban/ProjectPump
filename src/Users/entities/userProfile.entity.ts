@@ -17,7 +17,7 @@ export class UserProfile {
     @Column({ nullable: true })
     pictureURl: string;
 
-    @Column()
+    @Column({ nullable: true })
     teamId: string;
 
     @OneToOne(() => User, (user) => user.profile) 

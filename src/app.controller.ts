@@ -4,7 +4,6 @@ import { CreateTeamDto } from './Teams/models/createTeamDto';
 import { TeamService } from './Teams/team.service';
 import { User } from './Users/entities/user.entity';
 import { CreateUserDto } from './Users/models/createUserDto';
-import { UpdateUserProfileDto } from './Users/models/updateUserProfileDto';
 import { UserService } from './Users/user.service';
 
 @Controller()

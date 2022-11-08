@@ -14,7 +14,6 @@ import {  S3, Credentials } from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 import { UserService } from './Users/user.service';
 import { TeamService } from './Teams/team.service';
-import { UpdateUserProfileDtoAssembler } from './Users/assemblers/updateUserProfileDto.assembler';
 import { Config } from 'awsConfig';
 
 

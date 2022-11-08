@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
-import { S3 } from 'aws-sdk';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './models/createUserDto';
-import { UpdateUserProfileDto } from './models/updateUserProfileDto';
+import { UploadPictureDto } from './models/uploadProfilePictureDto';
+import { UserProfileDto } from './models/userProfileDto';
 import { UserService } from './user.service';
 
 
@@ -12,19 +12,23 @@ export class UserController {
   constructor(private userService: UserService){}
 
     @Get()
-    findAll(): Promise<User[]> {
+    findAll(): Promise<UserProfileDto[]> {
       return this.userService.findAll();
     }
 
     @Get(':id')
-    findOneById(@Param('id') id: string): Promise<User> {
+    findOneById(@Param('id') id: string): Promise<UserProfileDto> {
         return this.userService.findOne(id);
     }
 
-    @Get(':id/uploadUrl')
-    updateProfilePicture(): Promise <S3.PresignedPost> {
-      return this.userService.updateProfilePicture();
-       
+    @Get(':id/uploadPicture')
+    updateProfilePicture(@Param('id') id: string): Promise<UploadPictureDto> {
+      return this.userService.updateProfilePicture(id);
+    }
+
+    @Post(':id/getPicture')
+    getProfilePicture(@Body() key: string): Promise<string> {
+      return this.userService.getPictureUrl(key);
     }
 
     @Post()
@@ -33,7 +37,7 @@ export class UserController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateUser: UpdateUserProfileDto ) {
+    update(@Param('id') id: string, @Body() updateUser: UserProfileDto ) {
       return this.userService.update(id,updateUser);
     }
   
