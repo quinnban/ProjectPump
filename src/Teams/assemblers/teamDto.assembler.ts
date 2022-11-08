@@ -24,10 +24,7 @@ export class TeamDtoAssembler{
         teamDto.id = team.id;
         teamDto.name = team.name;
         const profiles = await team.users;
-        console.log('found users',profiles);
         teamDto.users = await this.userProfileAssembler.assembleMany(profiles);
-        
-        console.log('assembled team', teamDto);
         return Promise.resolve(teamDto);
     }
 

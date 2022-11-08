@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { InjectAwsService } from 'nest-aws-sdk';
 import { S3 } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
-import { UploadPictureDto } from './models/uploadProfilePictureDto';
+import { UploadPictureDto } from './models/uploadPictureDto';
 import { UploadPictureDtoAssembler } from './assemblers/UploadPictureDto.assembler';
 import { UserProfileDtoAssembler } from './assemblers/userProfileDto.assembler';
 import { UserProfileDto } from './models/userProfileDto';
@@ -53,7 +53,7 @@ export class UserService {
 
       async update(id:string, updatedUser: UserProfileDto): Promise<UserProfileDto> {
 
-          const user = await this.usersProfileRepository.findOneBy({id});
+        const user = await this.findOne(id);
           if(!user){
             throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
           }
@@ -62,9 +62,15 @@ export class UserService {
           return this.userProfileAssembler.assemble(updatedProfile);
       }
 
-      updateProfilePicture(id: string): Promise<UploadPictureDto> {
-        this.findOne(id);
-        const Key = uuidv4();
+      async updateProfilePicture(id: string): Promise<UploadPictureDto> {
+        const user = await this.findOne(id);
+        if(!user){
+          throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
+        }
+        let Key = uuidv4();
+        if(user.pictureURl === null){
+          Key = user.pictureURl;
+        }
         const Bucket = "project-pump-dev-pictures";
         const Fields =  {key: Key +'.png', 'Content-Type': 'image/png'};
         const responce = this.s3.createPresignedPost({ Bucket, Fields });
@@ -79,4 +85,74 @@ export class UserService {
         console.log(responce);
         return responce
       }
+
+      async setup(): Promise<void> {
+        let tempUser: User;
+          const user1 = new CreateUserDto();
+          user1.email = 'abc@123.com';
+          user1.password = 'qwerty123';
+          tempUser = await this.create(user1);
+      
+          const updateUser1 = new UserProfileDto();
+          updateUser1.firstName = 'jimbo';
+          updateUser1.lastName = 'slice';
+          updateUser1.id = tempUser.profileId;
+          await this.update(updateUser1.id,updateUser1);
+      
+          const user2 = new CreateUserDto();
+          user2.email = '123@abc.com';
+          user2.password = 'qwerty123';
+          tempUser = await this.create(user2);
+      
+          const updateUser2 = new UserProfileDto();
+          updateUser2.firstName = 'jam';
+          updateUser2.lastName = 'slice';
+          updateUser2.id = tempUser.profileId;
+          await this.update(updateUser2.id,updateUser2);
+      
+          const user3 = new CreateUserDto();
+          user3.email = 'qwerty@123.com';
+          user3.password = 'qwerty123';
+          tempUser = await this.create(user3);
+      
+          const updateUser3 = new UserProfileDto();
+          updateUser3.firstName = 'jimmy';
+          updateUser3.lastName = 'slice';
+          updateUser3.id = tempUser.profileId;
+          await this.update(updateUser3.id,updateUser3);
+      
+          const user4 = new CreateUserDto();
+          user4.email = 'aqws@abc.com';
+          user4.password = 'qwerty123';
+          tempUser = await this.create(user4);
+      
+          const updateUser4 = new UserProfileDto();
+          updateUser4.firstName = 'jane';
+          updateUser4.lastName = 'slim';
+          updateUser4.id = tempUser.profileId;
+          await this.update(updateUser4.id,updateUser4);
+      
+          const user5 = new CreateUserDto();
+          user5.email = 'iopi@123.com';
+          user5.password = 'qwerty123';
+          tempUser = await this.create(user5);
+      
+          const updateUser5 = new UserProfileDto();
+          updateUser5.firstName = 'jamie';
+          updateUser5.lastName = 'slim';
+          updateUser5.id = tempUser.profileId;
+          await this.update(updateUser5.id,updateUser5);
+      
+          const user6 = new CreateUserDto();
+          user6.email = 'ajkljs@abc.com';
+          user6.password = 'qwerty123';
+          tempUser = await this.create(user6);
+      
+          const updateUser6 = new UserProfileDto();
+          updateUser6.firstName = 'jenny';
+          updateUser6.lastName = 'slim';
+          updateUser6.id = tempUser.profileId;
+          await this.update(updateUser6.id,updateUser6);
+      }
+
 }

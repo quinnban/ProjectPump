@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './models/createUserDto';
-import { UploadPictureDto } from './models/uploadProfilePictureDto';
+import { UploadPictureDto } from './models/uploadPictureDto';
 import { UserProfileDto } from './models/userProfileDto';
 import { UserService } from './user.service';
 
@@ -14,6 +14,11 @@ export class UserController {
     @Get()
     findAll(): Promise<UserProfileDto[]> {
       return this.userService.findAll();
+    }
+
+    @Get(':id/setup')
+    setup(): Promise<void> {
+      return this.userService.setup();
     }
 
     @Get(':id')

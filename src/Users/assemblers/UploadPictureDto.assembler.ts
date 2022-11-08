@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { S3 } from "aws-sdk";
-import { UploadPictureDto } from "../models/uploadProfilePictureDto";
+import { UploadPictureDto } from "../models/uploadPictureDto";
 
 @Injectable()
 export class UploadPictureDtoAssembler {

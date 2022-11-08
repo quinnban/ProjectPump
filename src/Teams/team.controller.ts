@@ -14,6 +14,11 @@ export class TeamController {
      return this.teamService.findAll();
     }
 
+    @Get(':id/setup')
+    setup(): Promise<void> {
+      return this.teamService.setup();
+    }
+
     @Get(':id')
     findOneById(@Param('id') id: string): Promise<TeamDto> {
       return this.teamService.findOne(id);

@@ -1,10 +1,13 @@
 import { Injectable } from "@nestjs/common";
+import { S3 } from "aws-sdk";
+import { InjectAwsService } from "nest-aws-sdk";
 import { UserProfile } from "../entities/userProfile.entity";
 import { UserProfileDto } from "../models/userProfileDto";
 
 @Injectable()
 export class UserProfileDtoAssembler {
 
+    constructor(@InjectAwsService(S3) private readonly s3: S3,){}
 
     async assembleMany(users : UserProfile []): Promise<UserProfileDto []>{
         const profiles : UserProfileDto[] = [];
@@ -22,19 +25,19 @@ export class UserProfileDtoAssembler {
         profile.lastName = user.lastName;
         profile.pictureURl = user.pictureURl;
         profile.id = user.id;
-       
-        const team = await user.team;
-        if(team){
-            profile.teamId = team.id;
+        profile.teamId = user.teamId;
+        if(user.pictureURl){
+            const Bucket = "project-pump-dev-pictures";
+            const responce = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:user.pictureURl})
+            profile.pictureURl = responce;
         }
         return Promise.resolve(profile);
     }
 
     disassembleInto(from : UserProfileDto, to: UserProfile): UserProfile {
-        to.firstName = from.lastName;
+        to.firstName = from.firstName;
         to.lastName = from.lastName;
         to.pictureURl = from.pictureURl;
-        
         return to;
     }
 }

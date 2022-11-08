@@ -55,5 +55,19 @@ export class TeamService {
         await this.teamsRepository.save(createdTeam);
         return this.teamAssembler.assemble(createdTeam);
       }
+
+      async setup():Promise<void> {
+      const users = await this.usersProfileRepository.find();
+      const team1 = new CreateTeamDto();
+      team1.name = 'Slice Bois';
+      team1.users = [users[0].id,users[1].id,users[2].id];
+      await this.create(team1);
+
+      const team2 = new CreateTeamDto();
+      team2.name = 'Slice Girls';
+      team2.users =[users[3].id,users[4].id,users[5].id];
+      await this.create(team2);
+      }
+
   
 }
