@@ -16,6 +16,7 @@ export class UserController {
   constructor(private userService: UserService){}
 
     @Get()
+    @Roles('admin')
     findAll(): Promise<UserProfileDto[]> {
       return this.userService.findAll();
     }
