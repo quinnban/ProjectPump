@@ -20,7 +20,7 @@ export class User {
     @Column()
     profileId: string;
 
-    @OneToOne(() => UserProfile, (profile) => profile.user, {cascade:true, onDelete:"CASCADE",eager:true})
+    @OneToOne(() => UserProfile, (profile) => profile.user, {cascade:true, onDelete:"CASCADE"})
     @JoinColumn()
     profile: UserProfile
 
