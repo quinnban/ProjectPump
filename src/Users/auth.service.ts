@@ -15,7 +15,7 @@ export class AuthService {
     async login(login: LoginDto): Promise<string> {
         const user = await this.usersRepository.findOneBy({email:login.email});
         if(!user){
-            throw new HttpException('User not found', HttpStatus.UNAUTHORIZED)
+            throw new HttpException( 'Invalid',HttpStatus.UNAUTHORIZED)
         }
 
         if(bcrypt.compareSync(login.password,user.password)){

@@ -1,5 +1,6 @@
 import { Exercise } from "src/Exercises/entities/exercise.entity";
-import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import { WorkoutExercise } from "src/Exercises/entities/workOutExerciseReps.entity";
+import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable, OneToMany, JoinColumn } from "typeorm";
 
 @Entity()
 export class Workout {
@@ -12,8 +13,8 @@ export class Workout {
     @Column()
     description: string;
 
-    @ManyToMany(type => Exercise)
-    @JoinTable()
-    exersizes: Promise<Exercise []>;
+    @OneToMany(() => WorkoutExercise, info => info.workout)
+    @JoinColumn()
+    exercises: Promise <WorkoutExercise []>;
 
 }

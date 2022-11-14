@@ -1,6 +1,7 @@
 import { Photo } from "src/Media/entites/photo";
-import { Workout } from "src/Workouts/entites/workout.entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
+import { WorkoutExercise } from "./workOutExerciseReps.entity";
+
 
 @Entity()
 export class Exercise {
@@ -14,15 +15,13 @@ export class Exercise {
     description: string;
 
     @Column()
-    catergory: string;
+    category: string;
 
     @OneToMany(() => Photo, (photo) => photo.exersize)
     @JoinColumn()
     photos: Promise<Photo []> 
 
-    @ManyToMany(type => Workout)
-    @JoinTable()
-    workouts: Promise<Workout []>;
-
+    @OneToMany(() => WorkoutExercise, info => info.exercise)
+    info: Promise<WorkoutExercise []>;
 
 }
