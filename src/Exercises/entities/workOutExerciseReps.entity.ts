@@ -1,11 +1,12 @@
 import { Workout } from "src/Workouts/entites/workout.entity";
 import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Exercise } from "./exercise.entity";
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class WorkoutExercise {
     @PrimaryColumn()
-    public workoutExerciseRep!: string
+    public id!: string
 
     @Column()
     public workoutId!: string
@@ -27,4 +28,10 @@ export class WorkoutExercise {
 
     @ManyToOne(()=> Workout, (workout => workout.exercises))
     public workout!: Promise<Workout>;
+
+    public static newInstace(): WorkoutExercise{
+        const instance = new WorkoutExercise();
+        instance.id = uuidv4();
+        return instance;
+    }
 }

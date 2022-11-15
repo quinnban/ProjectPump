@@ -15,6 +15,9 @@ import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 import { UserService } from './Users/user.service';
 import { TeamService } from './Teams/team.service';
 import { Config } from 'awsConfig';
+import { Exercise } from './Exercises/entities/exercise.entity';
+import { WorkoutExercise } from './Exercises/entities/workOutExerciseReps.entity';
+import { Workout } from './Workouts/entites/workout.entity';
 
 
 const entities = [
@@ -41,7 +44,7 @@ const entities = [
       username: 'service_user',
       password: 'password',
       database: 'workout',
-      entities:[User,Team,UserProfile],
+      entities:[User,Team,UserProfile,Exercise,WorkoutExercise,Workout],
       synchronize: true,
     }),
     UserModule,

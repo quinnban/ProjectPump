@@ -21,7 +21,7 @@ export class TeamService {
 
       async findAll(): Promise<TeamDto[]> {
         const teams = await this.teamsRepository.find();
-        return this.teamAssembler.assembleMany(teams);
+        return await this.teamAssembler.assembleMany(teams);
       }
     
       async findOne(id: string): Promise<TeamDto> {

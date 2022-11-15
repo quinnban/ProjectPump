@@ -11,22 +11,22 @@ export class ExerciseController {
 
     @Get()
     findAll(): Promise<ExerciseDto[]> {
-     return Promise.resolve([]);
+     return this.exerciseService.findAll();
     }
 
     @Get(':id')
     findOneById(@Param('id') id: string): Promise<ExerciseDto> {
-      return Promise.resolve(new ExerciseDto());
+      return this.exerciseService.findOne(id);
     }
 
     @Post()
-    create(@Body() team: CreateTeamDto): Promise<ExerciseDto>{
-       return  Promise.resolve(new ExerciseDto());
+    create(@Body() exercise: ExerciseDto ): Promise<ExerciseDto>{
+       return  this.exerciseService.create(exercise);
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updatedTeam: UpdateTeamDto): Promise<ExerciseDto> {
-      return  Promise.resolve(new ExerciseDto());
+    update(@Param('id') id: string, @Body() exercise: ExerciseDto): Promise<ExerciseDto> {
+      return  this.exerciseService.update(exercise);
     }
   
     @Delete(':id')

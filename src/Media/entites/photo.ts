@@ -24,6 +24,6 @@ export class Photo {
     @OneToOne(() => PhotoMetadata, (photoMetadata) => photoMetadata.photo)
     metadata: Relation<PhotoMetadata>
 
-    @ManyToOne(() => Exercise, (exercise) => exercise.photos )
-    exersize: Exercise;
+    // @ManyToOne(() => Exercise, (exercise) => exercise.photos )
+    // exersize: Exercise;
 }
