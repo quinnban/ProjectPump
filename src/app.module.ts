@@ -12,12 +12,12 @@ import { UserProfile } from './Users/entities/userProfile.entity';
 import { AwsSdkModule } from 'nest-aws-sdk';
 import {  S3, Credentials } from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
-import { UserService } from './Users/user.service';
-import { TeamService } from './Teams/team.service';
 import { Config } from 'awsConfig';
 import { Exercise } from './Exercises/entities/exercise.entity';
 import { WorkoutExercise } from './Exercises/entities/workOutExerciseReps.entity';
 import { Workout } from './Workouts/entites/workout.entity';
+import { ExerciseModule } from './Exercises/exersice.module';
+import { WorkoutModule } from './Workouts/workout.module';
 
 
 const entities = [
@@ -49,13 +49,12 @@ const entities = [
     }),
     UserModule,
     TeamModule,
+    ExerciseModule,
+    WorkoutModule
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    // UserService,
-    // TeamService,
-    // UpdateUserProfileDtoAssembler,
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,

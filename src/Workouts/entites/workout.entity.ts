@@ -18,4 +18,10 @@ export class Workout {
     @JoinColumn()
     exercises: Promise <WorkoutExercise []>;
 
+    public static newInstace(): Workout{
+        const instance = new Workout();
+        instance.id = uuidv4();
+        return instance;
+    }
+
 }

@@ -1,6 +1,4 @@
 import { Controller, Get, Param, Post, Body, Put, Delete } from "@nestjs/common"
-import { CreateTeamDto } from "src/Teams/models/createTeamDto"
-import { UpdateTeamDto } from "src/Teams/models/updateTeamDto"
 import { ExerciseService } from "./exercise.service"
 import { ExerciseDto } from "./models/ExerciseDto"
 
