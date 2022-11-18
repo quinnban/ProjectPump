@@ -15,9 +15,6 @@ export class WorkoutExercise {
     public exerciseId!: string
 
     @Column("simple-array")
-    public sets!: number []
-
-    @Column("simple-array")
     public reps!: number []
 
     @Column()

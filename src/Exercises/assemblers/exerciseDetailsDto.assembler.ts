@@ -19,7 +19,6 @@ export class ExerciseDetailDtoAssembler {
         e.id = exercise.id;
         e.exercise = await exercise.exercise;
         e.reps = exercise.reps;
-        e.sets = exercise.sets;
         e.order = exercise.order;
         e.workoutId = exercise.workoutId;
         return Promise.resolve(e);

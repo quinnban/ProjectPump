@@ -26,6 +26,11 @@ export class ExerciseController {
     update(@Param('id') id: string, @Body() exercise: ExerciseDto): Promise<ExerciseDto> {
       return  this.exerciseService.update(exercise);
     }
+
+    @Get(':id/setup')
+    setup(): Promise<void> {
+      return this.exerciseService.setup();
+    }
   
     @Delete(':id')
     remove(@Param('id') id: string) {

@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put, Delete } from "@nestjs/common"
 import { WorkoutDto } from "./models/workoutDto";
 import { WorkoutService } from "./workout.service";
 
-@Controller('exercise')
+@Controller('workout')
 export class WorkoutController {
 
   constructor(private workoutService: WorkoutService){}

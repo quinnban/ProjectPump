@@ -6,6 +6,7 @@ import { Exercise } from "./entities/exercise.entity";
 import * as Papa from "papaparse";
 import { ExerciseDto } from "./models/ExerciseDto";
 import { ExerciseDtoAssembler } from "./assemblers/exerciseDto.assembler";
+import * as path from "path";
 
 @Injectable()
 export class ExerciseService {
@@ -43,15 +44,15 @@ export class ExerciseService {
      }
 
       async setup(): Promise<void> {
-        const csv = readFileSync('../../setup/exerciseList.csv');
+        const dir = path.resolve('./setup/exerciseList.csv');
+        const csv = readFileSync(dir);
         const csvData = csv.toString();
         const data = await Papa.parse(csvData);
-        data.data.forEach(row => {
+        data.data.forEach(async row => {
             const exercise = Exercise.newInstace(); 
             exercise.category = row[0];
             exercise.name = row[1];
-
-            console.log(exercise);
+            await this.exerciseRepository.save(exercise);
         });
         
       }
