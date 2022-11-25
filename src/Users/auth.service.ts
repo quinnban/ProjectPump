@@ -20,10 +20,8 @@ export class AuthService {
 
         if(bcrypt.compareSync(login.password,user.password)){
             return this.jwtService.sign({ payload: {profileId:user.profileId,role:user.role}});
-
-              // jwt.verify(token, 'shhhhh', function(err, decoded) {  console.log(decoded.foo) // bar});
         }
-        throw new HttpException('User not found', HttpStatus.UNAUTHORIZED)
+        throw new HttpException('Invalid username or password', HttpStatus.UNAUTHORIZED)
 
     }
 }

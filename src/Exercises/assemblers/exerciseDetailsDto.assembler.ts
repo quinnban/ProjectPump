@@ -38,7 +38,6 @@ export class ExerciseDetailDtoAssembler {
     disassembleInto(from : ExerciseDetailDto, to: WorkoutExercise): WorkoutExercise {
         to.order = from.order;
         to.reps = from.reps;
-        to.sets = from.sets;
         return to;
     }
 }
