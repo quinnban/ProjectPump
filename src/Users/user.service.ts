@@ -33,7 +33,10 @@ export class UserService {
       }
     
       async findOne(id: string): Promise<UserProfileDto> {
-        const user =  await this.usersProfileRepository.findOneBy({id});
+        const user =  await this.usersProfileRepository.findOne({
+          where: {id},
+          relations:{teams:true}
+        });
         return this.userProfileAssembler.assemble(user);
       }
     

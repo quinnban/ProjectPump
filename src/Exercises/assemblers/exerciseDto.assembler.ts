@@ -5,24 +5,24 @@ import { ExerciseDto } from "../models/ExerciseDto";
 @Injectable()
 export class ExerciseDtoAssembler {
 
-    async assembleMany(exercises : Exercise []): Promise<ExerciseDto []>{
+     assembleMany(exercises : Exercise []): ExerciseDto []{
         const exerciseDtos : ExerciseDto[] = [];
         
        for(const exercise of exercises){
-            const e = await this.assemble(exercise);
+            const e =  this.assemble(exercise);
             exerciseDtos.push(e);
        }
-        return Promise.resolve(exerciseDtos);
+        return exerciseDtos;
     }
 
-    async assemble(exercise: Exercise): Promise<ExerciseDto> {
+     assemble(exercise: Exercise): ExerciseDto {
         const e = new ExerciseDto();
         e.id = exercise.id;
         e.category  = exercise.category;
         e.description = exercise.description;
         e.name = exercise.name;
        
-        return Promise.resolve(e);
+        return e;
     }
 
     disassembleInto(from : ExerciseDto, to: Exercise): Exercise {

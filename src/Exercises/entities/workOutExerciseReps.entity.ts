@@ -20,11 +20,11 @@ export class WorkoutExercise {
     @Column()
     public order!: number
 
-    @ManyToOne(()=> Exercise, (exercise => exercise.info))
-    public exercise!: Promise<Exercise>;
+    @ManyToOne(()=> Exercise, (exercise => exercise.info), {eager:true})
+    public exercise!: Exercise;
 
     @ManyToOne(()=> Workout, (workout => workout.exercises))
-    public workout!: Promise<Workout>;
+    public workout!: Workout;
 
     public static newInstace(): WorkoutExercise{
         const instance = new WorkoutExercise();

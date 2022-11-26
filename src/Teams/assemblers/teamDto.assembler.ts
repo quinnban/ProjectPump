@@ -23,8 +23,7 @@ export class TeamDtoAssembler{
         const teamDto = new TeamDto();
         teamDto.id = team.id;
         teamDto.name = team.name;
-        const profiles = team.users;
-        teamDto.users = await this.userProfileAssembler.assembleMany(profiles);
+        teamDto.users = await this.userProfileAssembler.assembleMany(team.users);
         return Promise.resolve(teamDto);
     }
 

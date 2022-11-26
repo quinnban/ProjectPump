@@ -21,7 +21,7 @@ export class UserProfile {
     user: Promise<User>;
 
     @ManyToMany(() => Team, (team) => team.users)
-    team: Team [];
+    teams: Team [];
 
 
     public static newInstace(): UserProfile{

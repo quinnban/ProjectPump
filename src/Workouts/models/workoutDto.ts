@@ -4,5 +4,5 @@ export class WorkoutDto {
     id: string;
     name: string;
     description: string;
-    exercies: ExerciseDetailDto [];
+    exercises: ExerciseDetailDto [];
 }

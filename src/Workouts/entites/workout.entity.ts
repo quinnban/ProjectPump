@@ -1,6 +1,6 @@
 import { Exercise } from "src/Exercises/entities/exercise.entity";
 import { WorkoutExercise } from "src/Exercises/entities/workOutExerciseReps.entity";
-import { Entity, PrimaryColumn, Column, OneToMany, JoinColumn } from "typeorm";
+import { Entity, PrimaryColumn, Column, OneToMany, JoinColumn, ManyToMany } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
@@ -11,12 +11,12 @@ export class Workout {
     @Column()
     name: string;
 
-    @Column()
+    @Column({nullable:true})
     description: string;
 
-    @OneToMany(() => WorkoutExercise, info => info.workout)
+    @OneToMany(() => WorkoutExercise, info => info.workout,{cascade:true})
     @JoinColumn()
-    exercises: Promise <WorkoutExercise []>;
+    exercises: WorkoutExercise []; 
 
     public static newInstace(): Workout{
         const instance = new Workout();

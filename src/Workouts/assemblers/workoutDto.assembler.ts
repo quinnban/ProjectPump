@@ -7,31 +7,33 @@ import { WorkoutDto } from "../models/workoutDto";
 export class WorkoutDtoAssembler {
     constructor(private exerciseDetailsAssembler: ExerciseDetailDtoAssembler){}
 
-    async assembleMany(workouts : Workout []): Promise<WorkoutDto[]>{
+     assembleMany(workouts : Workout []): WorkoutDto[] {
         const workoutDtos : WorkoutDto[] = [];
         
        for(const workout of workouts){
-            const w = await this.assemble(workout);
+            const w =  this.assemble(workout);
             workoutDtos.push(w);
        }
-        return Promise.resolve(workoutDtos);
+        return workoutDtos;
     }
 
-    async assemble(workout: Workout): Promise<WorkoutDto> {
+     assemble(workout: Workout): WorkoutDto {
         const w = new WorkoutDto();
         w.id = workout.id;
         w.description = workout.description;
         w.name = workout.name;
-        const exercies = await workout.exercises;
-        w.exercies = await this.exerciseDetailsAssembler.assembleMany(exercies)
-        return Promise.resolve(w);
+        if(workout.exercises){
+            w.exercises =  this.exerciseDetailsAssembler.assembleMany(workout.exercises)
+        }
+        return w;
     }
 
-    async disassembleInto(from : WorkoutDto, to: Workout): Promise<Workout> {
+     async disassembleInto(from : WorkoutDto, to: Workout): Promise<Workout> {
         to.name = from.name;
-        to.description = to.description;
-        const exercies = await to.exercises;
-        to.exercises = Promise.resolve(this.exerciseDetailsAssembler.disassembleManyInto(from.exercies,exercies));
+        to.description = from.description;
+        if(from.exercises){
+            to.exercises = await this.exerciseDetailsAssembler.disassembleManyInto(from.exercises,to.exercises);
+        }
         return to;
     }
 }

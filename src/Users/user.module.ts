@@ -9,12 +9,13 @@ import { UserProfile } from './entities/userProfile.entity';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { JwtModule } from "@nestjs/jwt";
+import { userTeamDtoAssembler } from './assemblers/userTeamDto.assembler';
 
 
 @Module({
   imports: [TypeOrmModule.forFeature([User,UserProfile]), 
   JwtModule.register({ secret: 'hard!to-guess_secret',signOptions:{expiresIn: '1d'} })],
   controllers: [UserController,AuthController],
-  providers: [UserService,UserProfileDtoAssembler,UploadPictureDtoAssembler,AuthService],
+  providers: [UserService,UserProfileDtoAssembler,UploadPictureDtoAssembler,AuthService, userTeamDtoAssembler],
 })
 export class UserModule {}

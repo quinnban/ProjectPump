@@ -19,24 +19,30 @@ export class WorkoutService {
       }
 
       async findAll() : Promise<WorkoutDto []>{
-        const exercises = await this.workoutRepository.find();
-        return await this.workoutAssembler.assembleMany(exercises);
+        const workouts = await this.workoutRepository.find();
+        return await this.workoutAssembler.assembleMany(workouts);
       }
 
       async findOne(id:string) : Promise<WorkoutDto>{
-        const exercise = await this.workoutRepository.findOneBy({id:id});
-        if(!exercise){
-            throw new HttpException('Exercise not found', HttpStatus.NOT_FOUND)
+        const workout = await this.workoutRepository.findOne({
+          where:{id},
+          relations:{exercises:true}
+        });
+        if(!workout){
+            throw new HttpException('Workout not found', HttpStatus.NOT_FOUND)
            }
-        return await this.workoutAssembler.assemble(exercise);
+        return await this.workoutAssembler.assemble(workout);
       }
 
-      async update(updatedWorkout: WorkoutDto): Promise<WorkoutDto> {
-        const exercise = await this.workoutRepository.findOneBy({id:updatedWorkout.id});
-        if(!exercise){
-            throw new HttpException('Exercise not found', HttpStatus.NOT_FOUND)
+      async update(id:string ,updatedWorkout: WorkoutDto): Promise<WorkoutDto> {
+        const workout = await this.workoutRepository.findOne({
+          where:{id},
+          relations:{exercises:true}
+        });
+        if(!workout){
+            throw new HttpException('Workout not found', HttpStatus.NOT_FOUND)
         }
-        const result = await this.workoutRepository.save(await this.workoutAssembler.disassembleInto(updatedWorkout,exercise));
+        const result = await this.workoutRepository.save(await this.workoutAssembler.disassembleInto(updatedWorkout,workout));
         return await this.workoutAssembler.assemble(result);
      }
 

@@ -24,7 +24,7 @@ export class Exercise {
     // photos: Promise<Photo []> 
 
     @OneToMany(() => WorkoutExercise, info => info.exercise)
-    info: Promise<WorkoutExercise []>;
+    info: WorkoutExercise [];
 
     public static newInstace(): Exercise{
         const instance = new Exercise();

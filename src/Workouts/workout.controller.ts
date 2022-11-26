@@ -18,13 +18,13 @@ export class WorkoutController {
     }
 
     @Post()
-    create(@Body() exercise: WorkoutDto ): Promise<WorkoutDto>{
-       return  this.workoutService.create(exercise);
+    create(@Body() workout: WorkoutDto ): Promise<WorkoutDto>{
+       return  this.workoutService.create(workout);
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() exercise: WorkoutDto): Promise<WorkoutDto> {
-      return  this.workoutService.update(exercise);
+    update(@Param('id') id: string, @Body() workout: WorkoutDto): Promise<WorkoutDto> {
+      return  this.workoutService.update(id,workout);
     }
   
     @Delete(':id')

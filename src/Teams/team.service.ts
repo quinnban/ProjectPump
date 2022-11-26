@@ -50,12 +50,10 @@ export class TeamService {
            throw new HttpException('Team not found', HttpStatus.NOT_FOUND)
           }
           const users = await this.usersProfileRepository.find({where:{id: In(updatedTeam.users)}})
-          console.log(users);
-         // team.users = Promise.resolve(users);
+          team.users = users;
           team.name = updatedTeam.name;
           const newteam = await this.teamsRepository.save(team);
-          console.log(await newteam.users)
-          return this.teamAssembler.assemble(team);
+          return this.teamAssembler.assemble(newteam);
       }
 
       async create(team: CreateTeamDto): Promise<TeamDto>{
@@ -72,7 +70,6 @@ export class TeamService {
       async setup():Promise<void> {
       const users = await this.usersProfileRepository.find();
       const team1 = new CreateTeamDto();
-      console.log(users);
       team1.name = 'Slice Bois';
       team1.users = [users[0].id,users[1].id,users[2].id];
       await this.create(team1);
