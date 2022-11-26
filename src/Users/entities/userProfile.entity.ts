@@ -1,5 +1,5 @@
 import { Team } from "src/Teams/entities/team";
-import { Entity, Column, PrimaryColumn, ManyToOne, OneToOne } from "typeorm"
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToOne, ManyToMany } from "typeorm"
 import { v4 as uuidv4 } from 'uuid';
 import { User } from "./user.entity";
 
@@ -17,14 +17,11 @@ export class UserProfile {
     @Column({ nullable: true })
     pictureURl: string;
 
-    @Column({ nullable: true })
-    teamId: string;
-
     @OneToOne(() => User, (user) => user.profile) 
     user: Promise<User>;
 
-    @ManyToOne(() => Team, (team) => team.users)
-    team: Promise<Team>;
+    @ManyToMany(() => Team, (team) => team.users)
+    team: Team [];
 
 
     public static newInstace(): UserProfile{

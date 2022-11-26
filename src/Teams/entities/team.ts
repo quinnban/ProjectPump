@@ -1,6 +1,5 @@
-import { User } from "src/Users/entities/user.entity";
 import { UserProfile } from "src/Users/entities/userProfile.entity";
-import { Entity, PrimaryColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryColumn, Column , JoinColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -12,9 +11,9 @@ export class Team {
     @Column()
     name: string;
 
-    @OneToMany(() => UserProfile, (user) => user.team)
-    @JoinColumn()
-    users: Promise<UserProfile []>;
+    @ManyToMany(() => UserProfile, (user) => user.team)
+    @JoinTable()
+    users:UserProfile [];
 
     public static newInstace(): Team{
         const instance = new Team();

@@ -25,7 +25,18 @@ export class TeamService {
       }
     
       async findOne(id: string): Promise<TeamDto> {
-         const team = await this.teamsRepository.findOneBy({ id });
+         const team = await this.teamsRepository.findOne({
+          where: {
+           id:id
+          }, 
+          relations: {
+            users:true
+          }
+         });
+         if(!team){
+          throw new HttpException('Team not found', HttpStatus.NOT_FOUND)
+         }
+
          return this.teamAssembler.assemble(team); 
       }
     
@@ -39,9 +50,11 @@ export class TeamService {
            throw new HttpException('Team not found', HttpStatus.NOT_FOUND)
           }
           const users = await this.usersProfileRepository.find({where:{id: In(updatedTeam.users)}})
-          team.users = Promise.resolve(users);
+          console.log(users);
+         // team.users = Promise.resolve(users);
           team.name = updatedTeam.name;
-          await this.teamsRepository.save(team);
+          const newteam = await this.teamsRepository.save(team);
+          console.log(await newteam.users)
           return this.teamAssembler.assemble(team);
       }
 
@@ -50,15 +63,16 @@ export class TeamService {
         createdTeam.name = team.name;
         if(team.users?.length !=0){
           const users = await this.usersProfileRepository.find({where:{id: In(team.users)}})
-          createdTeam.users = Promise.resolve(users);
+          createdTeam.users = users;
         }
-        await this.teamsRepository.save(createdTeam);
-        return this.teamAssembler.assemble(createdTeam);
-      }
+        const saved = await this.teamsRepository.save(createdTeam);
+        return this.teamAssembler.assemble(saved);
+      } 
 
       async setup():Promise<void> {
       const users = await this.usersProfileRepository.find();
       const team1 = new CreateTeamDto();
+      console.log(users);
       team1.name = 'Slice Bois';
       team1.users = [users[0].id,users[1].id,users[2].id];
       await this.create(team1);

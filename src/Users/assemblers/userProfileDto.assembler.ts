@@ -25,7 +25,7 @@ export class UserProfileDtoAssembler {
         profile.lastName = user.lastName;
         profile.pictureURl = user.pictureURl;
         profile.id = user.id;
-        profile.teamId = user.teamId;
+
         if(user.pictureURl){
             const Bucket = "project-pump-dev-pictures";
             const responce = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:user.pictureURl})

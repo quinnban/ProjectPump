@@ -32,8 +32,9 @@ export class UserService {
         return this.userProfileAssembler.assembleMany(users);
       }
     
-      findOne(id: string): Promise<UserProfile> {
-        return this.usersProfileRepository.findOneBy({id});
+      async findOne(id: string): Promise<UserProfileDto> {
+        const user =  await this.usersProfileRepository.findOneBy({id});
+        return this.userProfileAssembler.assemble(user);
       }
     
       async remove(id: string): Promise<void> {
@@ -53,7 +54,7 @@ export class UserService {
 
       async update(id:string, updatedUser: UserProfileDto): Promise<UserProfileDto> {
 
-        const user = await this.findOne(id);
+        const user =  await this.usersProfileRepository.findOneBy({id});
           if(!user){
             throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
           }

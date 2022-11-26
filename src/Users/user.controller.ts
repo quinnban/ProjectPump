@@ -8,8 +8,8 @@ import { UserService } from './user.service';
 import { Roles } from 'src/guards/roles.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
 
-@Roles('user')
-@UseGuards(AuthGuard,RolesGuard)
+// @Roles('user')
+// @UseGuards(AuthGuard,RolesGuard)
 @Controller('users')
 export class UserController {
 
