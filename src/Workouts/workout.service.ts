@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ExerciseService } from "src/Exercises/exercise.service";
+import { ExerciseDetailDto } from "src/Exercises/models/ExerciseDetailDto";
 import { Repository } from "typeorm";
 import { WorkoutDtoAssembler } from "./assemblers/workoutDto.assembler";
 import { Workout } from "./entites/workout.entity";
@@ -9,7 +11,8 @@ import { WorkoutDto } from "./models/workoutDto";
 export class WorkoutService {
     constructor(
         @InjectRepository(Workout) private workoutRepository: Repository<Workout>,
-        private workoutAssembler: WorkoutDtoAssembler
+        private workoutAssembler: WorkoutDtoAssembler,
+        private exerciseService: ExerciseService
       ) {}
 
       async create(workout: WorkoutDto): Promise<WorkoutDto> {
@@ -44,6 +47,28 @@ export class WorkoutService {
         }
         const result = await this.workoutRepository.save(await this.workoutAssembler.disassembleInto(updatedWorkout,workout));
         return await this.workoutAssembler.assemble(result);
+     }
+
+
+     async setup(): Promise<void> {
+      console.log('SETUP WORKOUTS');
+      const exercises = await this.exerciseService.findAll();
+      for(let x = 0; x < 10; x++){
+        let workout = new WorkoutDto();
+        const workoutExercises: ExerciseDetailDto [] = [];
+        workout.name = "workout " + x;
+        for(let i = 0; i < Math.floor( Math.random() * 10);i++){
+          let exerciseDetail = new ExerciseDetailDto();
+          exerciseDetail.exercise = exercises[Math.floor( Math.random() * exercises.length)];
+          exerciseDetail.order = i;
+          exerciseDetail.reps = [8,5,3]
+          workoutExercises.push(exerciseDetail);
+        }
+        workout.exercises = workoutExercises;
+        console.log(workout);
+        await this.create(workout);
+      }
+      
      }
 
 }

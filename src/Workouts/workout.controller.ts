@@ -32,4 +32,9 @@ export class WorkoutController {
       return `delete user`;
     }
 
+    @Get(':id/setup')
+    setup(){
+      this.workoutService.setup();
+    }
+
 }

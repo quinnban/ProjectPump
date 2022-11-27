@@ -19,4 +19,10 @@ export class TeamWorkoutController {
     }
 
 
+    @Get(':id/setup')
+    setup(){
+      this.teamService.setup();
+    }
+
+
 }

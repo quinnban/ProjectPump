@@ -34,7 +34,7 @@ export class ExerciseDetailDtoAssembler {
     async disassembleManyInto(froms : ExerciseDetailDto [], tos: WorkoutExercise []):  Promise<WorkoutExercise[]>{
         const exercises : WorkoutExercise[] = [];
         for(const from of froms){
-            const exerciseDetail = tos.find(t => t.id === from.id);
+            const exerciseDetail = tos ? tos.find(t => t.id === from.id) : false;
             if(exerciseDetail){
                 exercises.push( await this.disassembleInto(from,exerciseDetail))
             } else {

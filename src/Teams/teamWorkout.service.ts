@@ -43,4 +43,18 @@ export class TeamWorkoutService {
 
         return this.teamAssembler.assemble(team);
       }
+
+
+      async setup():Promise <void> {
+        const workouts = await this.workoutRepository.find();
+        const teams = await this.teamsRepository.find();
+
+        for(const team of teams) {
+          let teamWorkouts = [];
+          for(let i = 0; i < Math.floor( Math.random() * 10)+1; i++) {
+            teamWorkouts.push(workouts[Math.floor( Math.random() * workouts.length)].id)
+          }
+          await this.updateTeamWorkouts(team.id,teamWorkouts);
+      }
+    }
 }
