@@ -2,6 +2,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserProfile } from 'src/Users/entities/userProfile.entity';
+import { WorkoutDtoAssembler } from 'src/Workouts/assemblers/workoutDto.assembler';
+import { WorkoutDto } from 'src/Workouts/models/workoutDto';
 import { In, Repository } from 'typeorm';
 import { TeamDtoAssembler } from './assemblers/teamDto.assembler';
 import { Team } from './entities/team';
@@ -16,7 +18,8 @@ export class TeamService {
     constructor(
         @InjectRepository(Team) private teamsRepository: Repository<Team>,
         @InjectRepository(UserProfile) private usersProfileRepository: Repository<UserProfile>,
-        private teamAssembler: TeamDtoAssembler
+        private teamAssembler: TeamDtoAssembler,
+        private workoutAssember: WorkoutDtoAssembler
       ) {}
 
       async findAll(): Promise<TeamDto[]> {
@@ -30,7 +33,8 @@ export class TeamService {
            id:id
           }, 
           relations: {
-            users:true
+            users:true,
+            workouts:true
           }
          });
          if(!team){

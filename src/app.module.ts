@@ -46,6 +46,7 @@ const entities = [
       database: 'workout',
       entities:[User,Team,UserProfile,Exercise,WorkoutExercise,Workout],
       synchronize: true,
+      logging: true
     }),
     UserModule,
     TeamModule,

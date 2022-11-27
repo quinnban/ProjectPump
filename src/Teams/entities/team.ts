@@ -1,6 +1,6 @@
 import { UserProfile } from "src/Users/entities/userProfile.entity";
 import { Workout } from "src/Workouts/entites/workout.entity";
-import { Entity, PrimaryColumn, Column , JoinColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryColumn, Column , ManyToMany, JoinTable } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 
 
