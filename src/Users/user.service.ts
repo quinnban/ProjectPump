@@ -40,6 +40,9 @@ export class UserService {
           where: {id},
           relations:{teams:true}
         });
+        if(!user){
+          throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
+        }
         return this.userProfileAssembler.assemble(user);
       }
     
