@@ -7,9 +7,12 @@ import { WorkoutExercise } from "./entities/workOutExerciseReps.entity";
 import { ExerciseController } from "./exercise.controller";
 import { ExerciseService } from "./exercise.service";
 
+const ASSEMBLERS = [ExerciseDetailDtoAssembler, ExerciseDtoAssembler]
+
 @Module({
     imports: [TypeOrmModule.forFeature([Exercise,WorkoutExercise])],
     controllers: [ExerciseController],
-    providers: [ExerciseService, ExerciseDetailDtoAssembler, ExerciseDtoAssembler],
+    providers: [ExerciseService,...ASSEMBLERS ],
+    exports:[ExerciseService,...ASSEMBLERS]
   })
   export class ExerciseModule {}

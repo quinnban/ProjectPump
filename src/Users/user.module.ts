@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UploadPictureDtoAssembler } from './assemblers/UploadPictureDto.assembler';
 import { UserProfileDtoAssembler } from './assemblers/userProfileDto.assembler';
@@ -9,13 +9,18 @@ import { UserProfile } from './entities/userProfile.entity';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { JwtModule } from "@nestjs/jwt";
-import { userTeamDtoAssembler } from './assemblers/userTeamDto.assembler';
+import { UserTeamDtoAssembler } from './assemblers/userTeamDto.assembler';
+import { TeamWorkoutService } from 'src/Teams/teamWorkout.service';
+import { TeamModule } from 'src/Teams/team.module';
 
+
+const ASSEMBLERS = [UserProfileDtoAssembler,UploadPictureDtoAssembler,UserTeamDtoAssembler]
 
 @Module({
   imports: [TypeOrmModule.forFeature([User,UserProfile]), 
-  JwtModule.register({ secret: 'hard!to-guess_secret',signOptions:{expiresIn: '1d'} })],
+  JwtModule.register({ secret: 'hard!to-guess_secret',signOptions:{expiresIn: '1d'} }), forwardRef(() =>TeamModule)],
   controllers: [UserController,AuthController],
-  providers: [UserService,UserProfileDtoAssembler,UploadPictureDtoAssembler,AuthService, userTeamDtoAssembler],
+  providers: [UserService,AuthService, ...ASSEMBLERS],
+  exports:[UserService, ...ASSEMBLERS]
 })
 export class UserModule {}

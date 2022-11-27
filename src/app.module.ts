@@ -48,8 +48,8 @@ const entities = [
       synchronize: true,
       logging: true
     }),
-    UserModule,
     TeamModule,
+    UserModule,
     ExerciseModule,
     WorkoutModule
   ],

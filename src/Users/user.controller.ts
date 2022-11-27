@@ -7,6 +7,7 @@ import { UserProfileDto } from './models/userProfileDto';
 import { UserService } from './user.service';
 import { Roles } from 'src/guards/roles.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { WorkoutDto } from 'src/Workouts/models/workoutDto';
 
 // @Roles('user')
 // @UseGuards(AuthGuard,RolesGuard)
@@ -34,6 +35,11 @@ export class UserController {
     @Get(':id/uploadPicture')
     updateProfilePicture(@Param('id') id: string): Promise<UploadPictureDto> {
       return this.userService.updateProfilePicture(id);
+    }
+
+    @Get(':id/workouts')
+    findWorkouts(@Param('id') id: string): Promise<WorkoutDto []> {
+      return this.userService.getWorkoutsByProfileId(id);
     }
 
     @Post(':id/getPicture')

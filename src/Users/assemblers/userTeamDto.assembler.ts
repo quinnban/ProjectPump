@@ -3,7 +3,7 @@ import { Team } from "src/Teams/entities/team";
 import { UserTeamDto } from "../models/userTeamDto";
 
 @Injectable()
-export class userTeamDtoAssembler {
+export class UserTeamDtoAssembler {
     assemble(team: Team): UserTeamDto {
         const teamDto = new UserTeamDto();
         teamDto.id = team.id;

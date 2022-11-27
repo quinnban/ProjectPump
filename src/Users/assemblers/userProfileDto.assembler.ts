@@ -3,12 +3,12 @@ import { S3 } from "aws-sdk";
 import { InjectAwsService } from "nest-aws-sdk";
 import { UserProfile } from "../entities/userProfile.entity";
 import { UserProfileDto } from "../models/userProfileDto";
-import { userTeamDtoAssembler } from "./userTeamDto.assembler";
+import { UserTeamDtoAssembler } from "./userTeamDto.assembler";
 
 @Injectable()
 export class UserProfileDtoAssembler {
 
-    constructor(@InjectAwsService(S3) private readonly s3: S3, private userTeamAssembler: userTeamDtoAssembler){}
+    constructor(@InjectAwsService(S3) private readonly s3: S3, private userTeamAssembler: UserTeamDtoAssembler){}
 
     async assembleMany(users : UserProfile []): Promise<UserProfileDto []>{
         const profiles : UserProfileDto[] = [];

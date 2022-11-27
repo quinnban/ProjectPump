@@ -13,6 +13,8 @@ import { UploadPictureDto } from './models/uploadPictureDto';
 import { UploadPictureDtoAssembler } from './assemblers/UploadPictureDto.assembler';
 import { UserProfileDtoAssembler } from './assemblers/userProfileDto.assembler';
 import { UserProfileDto } from './models/userProfileDto';
+import { TeamWorkoutService } from 'src/Teams/teamWorkout.service';
+import { WorkoutDto } from 'src/Workouts/models/workoutDto';
 
 
 
@@ -24,7 +26,8 @@ export class UserService {
         @InjectRepository(UserProfile) private usersProfileRepository: Repository<UserProfile>,
         @InjectAwsService(S3) private readonly s3: S3,
         private userProfileAssembler: UserProfileDtoAssembler,
-        private uploadPictureDtoAssembler: UploadPictureDtoAssembler
+        private uploadPictureDtoAssembler: UploadPictureDtoAssembler,
+        private teamWorkoutService: TeamWorkoutService
       ) {}
 
       async findAll(): Promise<UserProfileDto[]> {
@@ -88,6 +91,14 @@ export class UserService {
         const responce = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:key.key})
         console.log(responce);
         return responce
+      }
+
+      async getWorkoutsByProfileId(id: string): Promise<WorkoutDto []>{
+        const user = await this.findOne(id);
+        if(!user){
+          throw new HttpException('Profile not found', HttpStatus.NOT_FOUND)
+        }
+        return await this.teamWorkoutService.findWorkoutsByTeamId(user.teams.map(team => team.id));
       }
 
       async setup(): Promise<void> {
