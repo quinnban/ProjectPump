@@ -63,7 +63,9 @@ export class TeamService {
       async create(team: CreateTeamDto): Promise<TeamDto>{
         const createdTeam = Team.newInstace();
         createdTeam.name = team.name;
-        if(team.users?.length !=0){
+        console.log(team);
+        if(team.users && team.users?.length !=0){
+          console.log('here somehow', team.users)
           const users = await this.usersProfileRepository.find({where:{id: In(team.users)}})
           createdTeam.users = users;
         }
