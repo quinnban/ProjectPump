@@ -28,6 +28,7 @@ export class ExerciseDetailDtoAssembler {
         e.reps = exercise.reps;
         e.order = exercise.order;
         e.workoutId = exercise.workoutId;
+        e.exerciseId = exercise.exerciseId;
         return e;
     }
 
@@ -49,7 +50,7 @@ export class ExerciseDetailDtoAssembler {
         console.log(from, to)
         to.order = from.order;
         to.reps = from.reps;
-        const exercies = await  this.findExercise(from.exercise.id);
+        const exercies = await  this.findExercise(from.exerciseId);
         to.exercise =  exercies;
         return to;
     }

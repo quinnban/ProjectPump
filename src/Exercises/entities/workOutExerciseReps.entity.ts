@@ -17,13 +17,13 @@ export class WorkoutExercise {
     @Column("simple-array")
     public reps!: number []
 
-    @Column()
+    @Column({nullable:true})
     public order!: number
 
     @ManyToOne(()=> Exercise, (exercise => exercise.info), {eager:true})
     public exercise!: Exercise;
 
-    @ManyToOne(()=> Workout, (workout => workout.exercises))
+    @ManyToOne(()=> Workout, (workout => workout.exercises),{orphanedRowAction: 'delete'})
     public workout!: Workout;
 
     public static newInstace(): WorkoutExercise{

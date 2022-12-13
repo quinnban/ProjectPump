@@ -14,7 +14,7 @@ export class Workout {
     @Column({nullable:true})
     description: string;
 
-    @OneToMany(() => WorkoutExercise, info => info.workout,{cascade:true})
+    @OneToMany(() => WorkoutExercise, info => info.workout,{cascade:true, onDelete:'CASCADE'})
     @JoinColumn()
     exercises: WorkoutExercise []; 
 

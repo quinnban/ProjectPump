@@ -5,4 +5,6 @@ export class UpdateTeamDto {
     name: string;
     @IsArray()
     users: string [];
+    @IsArray()
+    workouts: string [];
 }
