@@ -42,7 +42,7 @@ export class InvitationService {
       template.Destination.ToAddresses.push(invitation.email);
       template.Source = "noreply@migrationunlimited.com";
 
-     await this.ses.sendTemplatedEmail(template)
+     const result = await this.ses.sendTemplatedEmail(template);
 
     }
 
