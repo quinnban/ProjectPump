@@ -16,7 +16,7 @@ export class WorkoutService {
       ) {}
 
       async create(workout: WorkoutDto): Promise<WorkoutDto> {
-        const w = Workout.newInstace();
+        const w = Workout.newInstance();
         const result = await this.workoutRepository.save(await this.workoutAssembler.disassembleInto(workout,w));
         return await this.workoutAssembler.assemble(result);
       }

@@ -13,7 +13,7 @@ export class TeamWorkoutService {
 
     constructor(
         @InjectRepository(Team) private teamsRepository: Repository<Team>,
-        private workoutAssember: WorkoutDtoAssembler,
+        private workoutAssembler: WorkoutDtoAssembler,
         @InjectRepository(Workout) private workoutRepository: Repository<Workout>,
         private teamAssembler: TeamDtoAssembler,
 
@@ -29,7 +29,7 @@ export class TeamWorkoutService {
         teams.forEach(team => {
           workouts.push(...team.workouts);
         });
-        return this.workoutAssember.assembleMany(Array.from(new Set(workouts)));
+        return this.workoutAssembler.assembleMany(Array.from(new Set(workouts)));
       }
 
       async updateTeamWorkouts(teamId: string, workoutIds: string []): Promise<TeamDto> {

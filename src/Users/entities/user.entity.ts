@@ -24,7 +24,7 @@ export class User {
     @JoinColumn()
     profile: UserProfile
 
-    public static newInstace(): User{
+    public static newInstance(): User{
         const instance = new User();
         instance.id = uuidv4();
         instance.role = 'user';

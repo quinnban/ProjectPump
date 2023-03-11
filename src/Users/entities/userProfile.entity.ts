@@ -24,7 +24,7 @@ export class UserProfile {
     teams: Team [];
 
 
-    public static newInstace(): UserProfile{
+    public static newInstance(): UserProfile{
         const instance = new UserProfile();
         instance.id = uuidv4();
         return instance;

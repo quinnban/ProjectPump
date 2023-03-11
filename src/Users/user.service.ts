@@ -51,8 +51,8 @@ export class UserService {
       }
 
       async create(user: CreateUserDto): Promise<User>{
-        const createdUser = User.newInstace();
-         const profile = UserProfile.newInstace();
+        const createdUser = User.newInstance();
+         const profile = UserProfile.newInstance();
          createdUser.profile = profile;
          await this.usersProfileRepository.save(profile);
         createdUser.email = user.email;
@@ -83,17 +83,17 @@ export class UserService {
         }
         const Bucket = "project-pump-dev-pictures";
         const Fields =  {key: Key +'.png', 'Content-Type': 'image/png'};
-        const responce = this.s3.createPresignedPost({ Bucket, Fields });
-        console.log(responce);
-        return Promise.resolve(this.uploadPictureDtoAssembler.assemble(Key,responce));
+        const response = this.s3.createPresignedPost({ Bucket, Fields });
+        console.log(response);
+        return Promise.resolve(this.uploadPictureDtoAssembler.assemble(Key,response));
       }
 
       async getPictureUrl(key): Promise<string> {
         const Bucket = "project-pump-dev-pictures";
         console.log(key.key);
-        const responce = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:key.key})
-        console.log(responce);
-        return responce
+        const response = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:key.key})
+        console.log(response);
+        return response
       }
 
       async getWorkoutsByProfileId(id: string): Promise<WorkoutDto []>{

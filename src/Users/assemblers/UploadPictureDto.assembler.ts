@@ -5,17 +5,17 @@ import { UploadPictureDto } from "../models/uploadPictureDto";
 @Injectable()
 export class UploadPictureDtoAssembler {
     
-    assemble(id:string, responce: S3.PresignedPost): UploadPictureDto{
+    assemble(id:string, response: S3.PresignedPost): UploadPictureDto{
      const  picture = new UploadPictureDto();
      picture.id = id;
-     picture.url =responce.url;
-     picture.signature = responce.fields['X-Amz-Signature'];
-     picture.algorithm = responce.fields['X-Amz-Algorithm'];
-     picture.credential = responce.fields['X-Amz-Credential'];
-     picture.date = responce.fields['X-Amz-Date'];
-     picture.bucket = responce.fields['bucket'];
-     picture.policy = responce.fields['Policy'];
-     picture.content = responce.fields['Content-Type'];
+     picture.url =response.url;
+     picture.signature = response.fields['X-Amz-Signature'];
+     picture.algorithm = response.fields['X-Amz-Algorithm'];
+     picture.credential = response.fields['X-Amz-Credential'];
+     picture.date = response.fields['X-Amz-Date'];
+     picture.bucket = response.fields['bucket'];
+     picture.policy = response.fields['Policy'];
+     picture.content = response.fields['Content-Type'];
      return picture;
     }
 }

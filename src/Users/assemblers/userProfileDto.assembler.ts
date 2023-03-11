@@ -32,8 +32,8 @@ export class UserProfileDtoAssembler {
 
         if(user.pictureURl){
             const Bucket = "project-pump-dev-pictures";
-            const responce = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:user.pictureURl})
-            profile.pictureURl = responce;
+            const response = await this.s3.getSignedUrlPromise('getObject',{Bucket,Key:user.pictureURl})
+            profile.pictureURl = response;
         }
         return Promise.resolve(profile);
     }

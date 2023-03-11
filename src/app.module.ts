@@ -18,6 +18,8 @@ import { WorkoutExercise } from './Exercises/entities/workOutExerciseReps.entity
 import { Workout } from './Workouts/entites/workout.entity';
 import { ExerciseModule } from './Exercises/exersice.module';
 import { WorkoutModule } from './Workouts/workout.module';
+import { Invitation } from './Invitations/entities /invitation.entity';
+import { InvitationModule } from './Invitations/intivation.module';
 
 
 const entities = [
@@ -44,14 +46,15 @@ const entities = [
       username: 'service_user',
       password: 'password',
       database: 'workout',
-      entities:[User,Team,UserProfile,Exercise,WorkoutExercise,Workout],
+      entities:[User,Team,UserProfile,Exercise,WorkoutExercise,Workout,Invitation],
       synchronize: true,
       logging: true
     }),
     TeamModule,
     UserModule,
     ExerciseModule,
-    WorkoutModule
+    WorkoutModule,
+    InvitationModule
   ],
   controllers: [AppController],
   providers: [

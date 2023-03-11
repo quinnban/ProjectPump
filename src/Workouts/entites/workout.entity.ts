@@ -18,7 +18,7 @@ export class Workout {
     @JoinColumn()
     exercises: WorkoutExercise []; 
 
-    public static newInstace(): Workout{
+    public static newInstance(): Workout{
         const instance = new Workout();
         instance.id = uuidv4();
         return instance;
