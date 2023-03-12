@@ -50,7 +50,7 @@ export class UserService {
         await this.usersRepository.delete(id);
       }
 
-      async create(user: CreateUserDto): Promise<User>{
+      async create(user: CreateUserDto): Promise<void>{
         const createdUser = User.newInstance();
          const profile = UserProfile.newInstance();
          createdUser.profile = profile;
@@ -58,7 +58,7 @@ export class UserService {
         createdUser.email = user.email;
         createdUser.password = bcrypt.hashSync(user.password, 10);
 
-        return this.usersRepository.save(createdUser);
+         this.usersRepository.save(createdUser);
       }
 
       async update(id:string, updatedUser: UserProfileDto): Promise<UserProfileDto> {

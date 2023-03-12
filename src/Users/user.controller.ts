@@ -47,10 +47,10 @@ export class UserController {
       return this.userService.getPictureUrl(key);
     }
 
-    @Post()
-    create(@Body() user: CreateUserDto): Promise<User>{
-        return this.userService.create(user);
-    }
+    // @Post()
+    // create(@Body() user: CreateUserDto): Promise<User>{
+    //     return this.userService.create(user);
+    // }
 
     @Put(':id')
     update(@Param('id') id: string, @Body() updateUser: UserProfileDto ) {

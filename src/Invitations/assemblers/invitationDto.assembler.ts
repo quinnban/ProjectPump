@@ -3,10 +3,11 @@ import { InvitationDto } from "../models/invitationDto";
 
 export class InvitationDtoAssembler {
 
-    assemble(invitation :Invitation): InvitationDto{
+    assemble(invitation :Invitation): InvitationDto {
         let to = new InvitationDto()
         to.id = invitation.id;
         to.email = invitation.email;
         return to;
     }
+
 }
