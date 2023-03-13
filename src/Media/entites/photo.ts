@@ -1,29 +1,30 @@
-import { Exercise } from "src/Exercises/entities/exercise.entity"
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm"
-import { PhotoMetadata } from "./photoMetadata"
+import { Column, Entity, PrimaryColumn } from "typeorm"
+import { PhotoType } from "../models/photoType";
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class Photo {
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryColumn()
+    id: string;
+
+    @Column({ length: 100})
+    name: string;
+
+    @Column()
+    key: string;
 
     @Column({
-        length: 100,
+        type: "enum",
+        enum: PhotoType,
     })
-    name: string
-
-    @Column("text")
-    description: string
+    type: PhotoType;
 
     @Column()
-    filename: string
+    size: number;
 
-    @Column()
-    isPublished: boolean
-
-    @OneToOne(() => PhotoMetadata, (photoMetadata) => photoMetadata.photo)
-    metadata: Relation<PhotoMetadata>
-
-    // @ManyToOne(() => Exercise, (exercise) => exercise.photos )
-    // exersize: Exercise;
+    public static newInstance(): Photo {
+        const instance = new Photo();
+        instance.id = uuidv4();
+        return instance;
+    }
 }

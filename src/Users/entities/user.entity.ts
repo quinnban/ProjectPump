@@ -1,6 +1,7 @@
 
 import { Entity, Column, PrimaryColumn, JoinColumn, OneToOne } from "typeorm"
 import { v4 as uuidv4 } from 'uuid';
+import { RoleType } from "../models/RoleType";
 import { UserProfile } from "./userProfile.entity";
 
 @Entity()
@@ -14,8 +15,12 @@ export class User {
     @Column()
     password: string;
 
-    @Column()
-    role: string;
+    @Column({
+        type: "enum",
+        enum: RoleType,
+        default: RoleType.USER
+    })
+    role: RoleType;
 
     @Column()
     profileId: string;
@@ -27,7 +32,7 @@ export class User {
     public static newInstance(): User{
         const instance = new User();
         instance.id = uuidv4();
-        instance.role = 'user';
+        instance.role = RoleType.USER;
         return instance;
     }
 }
