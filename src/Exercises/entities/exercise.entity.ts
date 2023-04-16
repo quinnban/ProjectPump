@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { ExerciseCategory } from "../models/ExerciseCategory";
 import { WorkoutExercise } from "./workOutExerciseReps.entity";
 import { v4 as uuidv4 } from 'uuid';
+import { Video } from "src/Media/entites/video";
 
 
 @Entity()
@@ -19,9 +20,12 @@ export class Exercise {
     @Column()
     category: ExerciseCategory;
 
-    // @OneToMany(() => Photo, (photo) => photo.exersize)
-    // @JoinColumn()
-    // photos: Promise<Photo []> 
+    @OneToMany(() => Photo, (photo) => photo.exercise)
+    @JoinColumn()
+    photos: Photo [];
+
+    @OneToMany(() => Video, (video) =>video.exercise, {orphanedRowAction: 'delete'})
+    videos: Video [];
 
     @OneToMany(() => WorkoutExercise, info => info.exercise)
     info: WorkoutExercise [];

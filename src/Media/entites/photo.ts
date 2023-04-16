@@ -1,6 +1,8 @@
-import { Column, Entity, PrimaryColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm"
 import { PhotoType } from "../models/photoType";
 import { v4 as uuidv4 } from 'uuid';
+import { Exercise } from "src/Exercises/entities/exercise.entity";
+import e from "express";
 
 @Entity()
 export class Photo {
@@ -21,6 +23,9 @@ export class Photo {
 
     @Column()
     size: number;
+
+    @ManyToOne(() => Exercise, (exercise) => exercise.photos)
+    exercise: Exercise;
 
     public static newInstance(): Photo {
         const instance = new Photo();
